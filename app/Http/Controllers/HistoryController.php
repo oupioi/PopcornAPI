@@ -47,7 +47,7 @@ class HistoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(History $id)
+    public function show(int $id)
     {
        return History::where('id_user', auth()->user()->id)->where('id_movie', $id)->get();
     }

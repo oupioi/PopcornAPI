@@ -41,9 +41,14 @@ class LikeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Like $like)
+    public function show(int $id)
     {
-        //
+        $like = Like::where('id_user', auth()->user()->id)->where('id_movie', $id)->get();
+        if($like->isEmpty()){
+            return response()->json(['message' => 'Ce like n\'existe pas'], 404);
+        }else{
+            return response()->json($like);
+        }
     }
 
     /**

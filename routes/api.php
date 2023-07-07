@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\LikeController;
 use App\Models\History;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,7 +29,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user/historique', [HistoryController::class, 'index']);
     Route::post('/user/historique', [HistoryController::class, 'store']);
     Route::get('/user/historique/{id}', [HistoryController::class, 'show']);
-    Route::get('/user/like', [UserController::class, 'like']);
+    Route::get('/user/like/{id}', [LikeController::class, 'index']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
