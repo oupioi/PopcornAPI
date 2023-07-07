@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HistoryController;
+use App\Models\History;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +21,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/user/inscription', [UserController::class, 'inscription']);
 Route::post('/user/connexion', [UserController::class, 'connexion']);
+
+
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/user/historique', [HistoryController::class, 'index']);
+    Route::post('/user/historique', [HistoryController::class, 'store']);
+    Route::get('/user/historique/{id}', [HistoryController::class, 'show']);
+    Route::get('/user/like', [UserController::class, 'like']);
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
