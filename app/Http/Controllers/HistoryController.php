@@ -49,7 +49,12 @@ class HistoryController extends Controller
      */
     public function show(int $id)
     {
-       return History::where('id_user', auth()->user()->id)->where('id_movie', $id)->get();
+        $historique = History::where('id_user', auth()->user()->id)->where('id_movie', $id)->get();
+        if($historique->isEmpty()){
+            return response()->json(['message' => 'Cet historique n\'existe pas'], 404);
+        }else{
+            return response()->json($historique);
+        }
     }
 
     /**
