@@ -3,6 +3,7 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\FriendsController;
 use App\Models\History;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/user/inscription', [UserController::class, 'inscription']);
 Route::post('/user/connexion', [UserController::class, 'connexion']);
+Route::post('/user/deconnexion', [UserController::class, 'deconnexion']);
 
 
 
@@ -30,6 +32,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/user/historique', [HistoryController::class, 'store']);
     Route::get('/user/historique/{id}', [HistoryController::class, 'show']);
     Route::get('/user/like/{id}', [LikeController::class, 'index']);
+    Route::get('/user/friend', [FriendsController::class, 'allFriends']);
+    Route::post('/user/friend', [FriendsController::class, 'addFriend']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

@@ -46,4 +46,19 @@ class UserController extends Controller
 
        return $response;
      }
+
+     public function deconnexion (Request $request){
+        $request->user()->currentAccessToken()->delete();
+        return response(['message' => 'Vous êtes déconnecté']);
+     }
+
+     public function getName(){
+        $name = auth()->user()->username;
+        return response(['name' => $name]);
+     }
+
+     public function getNameId(int $id){
+        $name = User::find($id)->username;
+        return response(['name' => $name]);
+    }
 }

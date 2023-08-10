@@ -20,6 +20,9 @@ return new class extends Migration
             $table->date('date_of_birth')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('address')->nullable();
+            $table->string('description',255)->nullable();
+            $table->string('pays')->nullable();
+            $table->string('statut')->nullable();
             $table->timestamps();
             $table->string('api_token', 80)->unique()->nullable()->default(null);
         });
