@@ -28,19 +28,18 @@ class UserController extends Controller
     public function connexion (Request $request){
         $userRequest = $request->validate([
             'username' => 'required|string|max:255',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string',
         ]);
         //retourne le premier utilisateur qui a le username avec toutes ses informations
        $user =  User::where('username', $userRequest['username'])->first();
        $response = ($user) ? $user : response(['message' => 'Utilisateur non trouvé'], 404);
 
+       // statut 200 "OK" si le mot de passe est correct
         if($user && password_verify($userRequest['password'], $user->password)){
             $token = $user->createToken('auth_token')->plainTextToken;
-            $response = [
-            'user' => $user,
-            'token' => $token,
-            ];
+            $response = response(['token' => $token], 200);
         }else{
+            // statut 401 "Accès à la ressource interdite" si le mot de passe est incorrect
             $response = response(['message' => 'Mot de passe incorrect'], 401);
         }
 
@@ -49,7 +48,7 @@ class UserController extends Controller
 
      public function deconnexion (Request $request){
         $request->user()->currentAccessToken()->delete();
-        return response(['message' => 'Vous êtes déconnecté']);
+        return response(['message' => 'Vous êtes déconnecté'], 200);
      }
 
      public function getName(){

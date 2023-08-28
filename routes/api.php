@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/user/inscription', [UserController::class, 'inscription']);
 Route::post('/user/connexion', [UserController::class, 'connexion']);
-Route::post('/user/deconnexion', [UserController::class, 'deconnexion']);
 
 
 
@@ -34,6 +33,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user/like/{id}', [LikeController::class, 'index']);
     Route::get('/user/friend', [FriendsController::class, 'allFriends']);
     Route::post('/user/friend', [FriendsController::class, 'addFriend']);
+    Route::get('/user/deconnexion', [UserController::class, 'deconnexion']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
