@@ -21,8 +21,13 @@ class UserController extends Controller
             'email' => $userRequest['email'],
             'password' => bcrypt($userRequest['password']),
          ]);
-
-        return response($user, 201);
+         if (!$user) {
+            return response(['message' => 'Erreur lors de la création de l\'utilisateur', ], 500);
+        }else{
+            $token = $user->createToken('auth_token')->plainTextToken;
+            $response = response(['token' => $token], 201);
+        }
+        return $response;
     }
 
     public function connexion (Request $request){
